@@ -16,20 +16,20 @@ The Panime dataset is comprised of two main components:
   * **Perspective Images**: For each panoramic image, there are 20 corresponding perspective views rendered from an icosahedron projection.
       * Resolution: `512 x 512`
 
-Each image set is accompanied by rich metadata, including the generative text prompts and camera parameters for each view.
+Each image set is accompanied by rich metadata, including generative text prompts, descriptive tags, and camera parameters for each view.
 
 -----
 
 ## File Structure
 
-The dataset is organized into `train`, `test`, and `val` splits. Within each split, a directory is created for each scene based on its panoramic prompt.
+The dataset is organized into `train`, `test`, and `val` splits. Within each split, a directory is created for each scene based on its panoramic prompt. The panoramic image filename also matches the folder name.
 
 ```
 Panime/
 ├── train/
-│   ├── A_vibrant_fantasy_marketplace.../
+│   ├── a_vibrant_coral_reef_ecosystem.../
 │   │   ├── pano/
-│   │   │   └── image.png
+│   │   │   └── a_vibrant_coral_reef_ecosystem....png
 │   │   └── images/
 │   │       ├── 0.png
 │   │       ├── 1.png
@@ -50,39 +50,47 @@ Panime/
 
 The JSON files (`train.json`, `test.json`, `val.json`) contain a list of objects, where each object details one panoramic scene.
 
-  * `pano`: The file path to the panoramic image.
-  * `pano_prompt`: The original text prompt used to generate the panoramic image.
-  * `images`: A list of 20 strings containing the file paths for each of the perspective views.
-  * `prompts`: A list of 20 strings containing detailed, descriptive captions for each corresponding perspective view.
-  * `cameras`: An object containing the camera parameters for the 20 perspective views:
-      * `FoV`: An array containing a list of 20 numbers representing the Field of View (in degrees) for each perspective image.
-      * `theta`: An array containing a list of 20 numbers representing the horizontal viewing angle (yaw, in degrees).
-      * `phi`: An array containing a list of 20 numbers representing the vertical viewing angle (pitch, in degrees).
+  * **`pano`**: The file path to the panoramic image.
+  * **`pano_prompt`**: The original text prompt used to generate the panoramic image.
+  * **`images`**: A list of 20 strings containing the file paths for each of the perspective views.
+  * **`cameras`**: An object containing the camera parameters for the 20 perspective views:
+      * `FoV`: An array containing a list of 20 numbers for the Field of View (degrees).
+      * `theta`: An array containing a list of 20 numbers for the horizontal viewing angle (yaw, degrees).
+      * `phi`: An array containing a list of 20 numbers for the vertical viewing angle (pitch, degrees).
+  * **`mood`**: A string describing the overall mood or atmosphere of the scene.
+  * **`tags`**: A list of strings containing relevant keywords for the scene.
+  * **`lighting`**: A string describing the lighting conditions.
+  * **`split`**: A string indicating the dataset split (`train`, `test`, or `val`).
+  * **`negative_tags`**: A list of strings for concepts that were excluded during generation.
+  * **`prompts`**: A list of 20 strings containing detailed, descriptive captions for each corresponding perspective view.
 
 **Example JSON Entry:**
 
 ```json
-[
-  {
-    "pano": "test/A_SWAT_team.../pano/image.png",
-    "pano_prompt": "A SWAT team breaking through a door during a raid, weapons ready and precision in every movement",
+{
+    "pano": "train/a_vibrant_coral_reef.../pano/a_vibrant_coral_reef....png",
+    "pano_prompt": "A vibrant coral reef ecosystem with diverse marine life, colorful corals, and clear turquoise waters",
     "images": [
-      "test/A_SWAT_team.../images/0.png",
-      "test/A_SWAT_team.../images/1.png",
-      "..."
+        "train/a_vibrant_coral_reef.../images/0.png",
+        "train/a_vibrant_coral_reef.../images/1.png",
+        "..."
     ],
     "cameras": {
-      "FoV": [[90, 90, 90, ...]],
-      "theta": [[0, 72, 144, ...]],
-      "phi": [[0, 0, 0, ...]]
+        "FoV": [[90, 90, ...]],
+        "theta": [[0, 72, ...]],
+        "phi": [[0, 0, ...]]
     },
+    "mood": "vibrant and lively",
+    "tags": ["coral reef", "marine life", "underwater", "..."],
+    "lighting": "bright and clear",
+    "split": "train",
+    "negative_tags": ["pollution", "bleached corals", "..."],
     "prompts": [
-      "The image depicts two armed individuals in tactical gear, poised at a wooden door...",
-      "The image features two characters dressed in tactical police uniforms, including helmets and masks...",
-      "..."
+        "The image features a vibrant underwater scene filled with various types of coral...",
+        "The image features a vibrant underwater scene with large, colorful coral formations...",
+        "..."
     ]
-  }
-]
+}
 ```
 
 -----
@@ -92,12 +100,9 @@ The JSON files (`train.json`, `test.json`, `val.json`) contain a list of objects
 The dataset is available for download from Google Drive.
 
   * **Standard Resolution (20GB)**: Contains `2048x1024` panoramas and `512x512` perspective images.
-
-      * **[Download Link Here]**(https://your-google-drive-link-for-standard-res](https://drive.google.com/file/d/1-6ejJcM-75NZMGWY5WqCHgHngbzFVabp/view?usp=share_link)
-
+      * **[Download Link]**([https://drive.google.com/file/d/1-6ejJcM-75NZMGWY5WqCHgHngbzFVabp/view?usp=share\_link](https://drive.google.com/file/d/1-6ejJcM-75NZMGWY5WqCHgHngbzFVabp/view?usp=share_link))
   * **High-Resolution (150GB)**: Contains the original `8192x4096` (8K) panoramic images only.
-
-      * **[Download Link Here]**(https://your-google-drive-link-for-8k-res](https://drive.google.com/file/d/1JnByvxrkrAVIH8QbhC3IMzop0XE9tG8d/view?usp=share_link)
+      * **[Download Link]**([https://drive.google.com/file/d/1JnByvxrkrAVIH8QbhC3IMzop0XE9tG8d/view?usp=share\_link](https://drive.google.com/file/d/1JnByvxrkrAVIH8QbhC3IMzop0XE9tG8d/view?usp=share_link))
 
 -----
 
